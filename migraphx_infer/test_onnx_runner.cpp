@@ -74,8 +74,16 @@ int main(int argc, char *argv[]) {
   std::cout << "Output name: " << output_name << std::endl;
   const char *output_names[] = {output_name};
 
-  auto output_tensors = session.Run(Ort::RunOptions{nullptr}, input_names,
+  int infer_count = 1;
+  if (argc >= 3) {
+    infer_count = std::atoi(argv[2]);
+  }
+  std::vector<Ort::Value> output_tensors; 
+  for (int i = 0; i < infer_count; ++i) {
+    std::cout<<"At iteration:" << i <<std::endl;
+    output_tensors = session.Run(Ort::RunOptions{nullptr}, input_names,
                                     &input_tensor, 1, output_names, 1);
+  }
   float *output_data = output_tensors.front().GetTensorMutableData<float>();
   auto output_info = output_tensors.front().GetTensorTypeAndShapeInfo();
   auto output_shape = output_info.GetShape();
