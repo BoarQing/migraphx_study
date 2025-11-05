@@ -11,6 +11,8 @@ int main(int argc, char *argv[]) {
 
   Ort::Env env(ORT_LOGGING_LEVEL_WARNING, "test_onnx_runner");
   Ort::SessionOptions session_options;
+  session_options.SetLogSeverityLevel(0); 
+  session_options.SetLogId("session_logger");
   Ort::ThrowOnError(
       OrtSessionOptionsAppendExecutionProvider_MIGraphX(session_options, 0));
 
