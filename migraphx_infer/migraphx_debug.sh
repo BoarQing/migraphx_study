@@ -1,0 +1,1 @@
+export MIGRAPHX_TRACE_PASSES=1
