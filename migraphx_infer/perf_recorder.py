@@ -22,6 +22,9 @@ def run(cmd, f, dir):
     filename = os.path.basename(f)
     log_file = filename.replace(".onnx", ".log")
     log_file_path = dir / log_file
+    if os.path.exists(log_file_path):
+        print(f"skip {filename}")
+        return
 
     cmd = [cmd, "-e", "migraphx", "-I", "-s", str(f)]
     print(f"running model {filename}")
